@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No-Show Revenue Loss Calculator - Dental Practices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+        
+        .form-section {
+            padding: 35px;
+        }
+        
+        .testimonial {
+            background: #edf2f7;
+            padding: 20px;
+            border-left: 4px solid #4299e1;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9em;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s ease;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
+        }
+        
+        .results {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            display: none;
+        }
+        
+        .results h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+            padding: 25px;
+            text-align: center;
+            color: white;
+            display: none;
+        }
+        
+        .cta-section h2 {
+            font-size: 1.4em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .cta-btn {
+            background: #38a169;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 15px;
+        }
+        
+        .cta-btn:hover {
+            background: #2f855a;
+            transform: translateY(-1px);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>No-Show Revenue Loss Calculator</h1>
+            <p>Calculate how much your dental practice loses monthly to patient no-shows</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="testimonial">
+                <div class="testimonial-text">"I had no idea I was losing $14,200 monthly to no-shows until I used this calculator."</div>
+                <div class="testimonial-author">- Dr. Sarah Chen, General Dentistry Practice</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="appointments-per-day">How many patient appointments does your practice schedule per day?</label>
+                <input type="number" id="appointments-per-day" placeholder="e.g., 25" min="5" max="100">
+            </div>
+            
+            <div class="input-group">
+                <label for="no-show-rate">What percentage of patients don't show up? (Industry average: 15%)</label>
+                <input type="number" id="no-show-rate" placeholder="e.g., 15" min="5" max="50">
+            </div>
+            
+            <div class="input-group">
+                <label for="appointment-value">Average value per appointment ($)</label>
+                <input type="number" id="appointment-value" placeholder="e.g., 185" min="50" max="800">
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateLosses()">
+                Calculate My Revenue Loss
+            </button>
+            
+            <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <p style="margin-bottom: 12px; color: #4a5568;">
+                    <strong>Want to see how to fix this immediately?</strong>
+                </p>
+                <button class="cta-btn" onclick="bookDemo()" style="background: #2b6cb0; margin-top: 0;">
+                    Book Free 30-Minute Demo
+                </button>
+                <div style="font-size: 0.85em; color: #718096; margin-top: 8px;">
+                    See our no-show solution in action • No obligation
+                </div>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <h2>Your No-Show Impact</h2>
+            
+            <div class="stat-box">
+                <span class="stat-number" id="monthly-loss">$0</span>
+                <div class="stat-label">Lost revenue per month</div>
+            </div>
+            
+            <div class="stat-box">
+                <span class="stat-number" id="yearly-loss">$0</span>
+                <div class="stat-label">Lost revenue per year</div>
+            </div>
+            
+            <div class="stat-box">
+                <span class="stat-number" id="appointments-lost">0</span>
+                <div class="stat-label">Appointments lost monthly</div>
+            </div>
+        </div>
+        
+        <div class="cta-section" id="cta-section">
+            <h2>Ready to Recover This Lost Revenue?</h2>
+            <p style="margin: 15px 0;">
+                Our AI system helps practices reduce no-shows by 85%+ with automated confirmations, smart rescheduling, and 24/7 patient communication.
+            </p>
+            <button class="cta-btn" onclick="bookDemo()">
+                Book Free 30-Minute Demo
+            </button>
+            <div class="disclaimer">
+                See exactly how this works for your practice • No obligation
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function calculateLosses() {
+            // Get input values
+            const appointmentsPerDay = parseFloat(document.getElementById('appointments-per-day').value);
+            const noShowRate = parseFloat(document.getElementById('no-show-rate').value);
+            const appointmentValue = parseFloat(document.getElementById('appointment-value').value);
+            
+            // Validation
+            if (!appointmentsPerDay || !noShowRate || !appointmentValue) {
+                alert('Please fill in all fields to see your results.');
+                return;
+            }
+            
+            if (appointmentsPerDay < 5 || appointmentsPerDay > 100) {
+                alert('Please enter a realistic number of appointments per day (5-100).');
+                return;
+            }
+            
+            if (noShowRate < 5 || noShowRate > 50) {
+                alert('Please enter a realistic no-show rate (5-50%).');
+                return;
+            }
+            
+            // Calculate losses
+            const workingDaysPerMonth = 22;
+            const monthlyAppointments = appointmentsPerDay * workingDaysPerMonth;
+            const monthlyNoShows = monthlyAppointments * (noShowRate / 100);
+            const monthlyLoss = monthlyNoShows * appointmentValue;
+            const yearlyLoss = monthlyLoss * 12;
+            
+            // Display results
+            document.getElementById('monthly-loss').textContent = '$' + Math.round(monthlyLoss).toLocaleString();
+            document.getElementById('yearly-loss').textContent = '$' + Math.round(yearlyLoss).toLocaleString();
+            document.getElementById('appointments-lost').textContent = Math.round(monthlyNoShows);
+            
+            // Show results sections
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('cta-section').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            
+            // Analytics tracking (optional)
+            console.log('ROI calculated:', {
+                monthlyLoss: monthlyLoss,
+                yearlyLoss: yearlyLoss,
+                appointmentsLost: monthlyNoShows
+            });
+        }
+        
+        function bookDemo() {
+            // Redirect to Calendly
+            window.open('https://calendly.com/a-wallen-lucid-ia/30min', '_blank');
+        }
+        
+        // Auto-populate industry averages on focus
+        document.getElementById('no-show-rate').addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = '15';
+            }
+        });
+        
+        document.getElementById('appointment-value').addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = '185';
+            }
+        });
+    </script>
+</body>
+</html>
